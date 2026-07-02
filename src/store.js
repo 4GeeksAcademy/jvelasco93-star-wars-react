@@ -2,6 +2,7 @@ export const initialStore = () => ({
   films: [],
   planets: [],
   people: [],
+  favorites: []
 })
 
 export default function storeReducer(store, action = {}) {
@@ -17,6 +18,13 @@ export default function storeReducer(store, action = {}) {
     }
     case 'set_all_data': {
       return {...store, ...action.payload}
+    }
+    case 'toggle_favorite': {
+      const exists = store.favorites.find(fav => fav.url === action.payload.url)
+      if (exists) {
+        return {...store, favorites: store.favorites.filter(fav => fav.url !== action.payload.url)}
+      }
+      return {...store, favorites: [...store.favorites, action.payload]}
     }
     default:
       throw Error('Unknown action.');

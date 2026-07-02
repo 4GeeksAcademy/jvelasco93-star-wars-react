@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom/dist"
 import ScrollToTop from "../components/ScrollToTop"
 import { Navbar } from "../components/Navbar"
-import { Footer } from "../components/Footer"
+// import { Footer } from "../components/Footer"
+import useFetchStarWars from "../hooks/useFetchStarWars"
 
-// Base component that maintains the navbar and footer throughout the page and the scroll to top functionality.
 export const Layout = () => {
+    useFetchStarWars()
     return (
         <ScrollToTop>
             <Navbar />
                 <Outlet />
-            <Footer />
+            {/*<Footer />*/}
         </ScrollToTop>
     )
 }
