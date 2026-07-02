@@ -1,16 +1,18 @@
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import {useEffect} from "react";
+import CardSection from "../components/CardSection.jsx";
+import useFetchStarWars from "../hooks/useFetchStarWars.jsx";
 
 export const Home = () => {
+  const {store} =useGlobalReducer()
+  useFetchStarWars();
+  if (store.films.length === 0 || store.planets.length === 0 || store.people.length === 0) return <h1>Loading...</h1>
+  return (
+    <div className="container">
+      <CardSection category="films" />
+      <CardSection category="planets" />
+      <CardSection category="people" />
+    </div>
+  )
+};
 
-  const {store, dispatch} =useGlobalReducer()
-
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-		</div>
-	);
-}; 
