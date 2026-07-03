@@ -1,39 +1,27 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import FavoritesDropdown from "./FavoritesDropdown.jsx";
 
 export const Navbar = () => {
-  const [categories, setCategories] = useState(null);
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        const res = await fetch("https://swapi.info/api/");
-        const data = await res.json();
-        setCategories(Object.keys(data));
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    getData();
-  }, []);
+  function closeNavbar() {
+    document.getElementById('navbarNav')?.classList.remove('show')
+  }
 
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-light bg-light sticky-top navbar-expand-md">
       <div className="container">
-        <Link to="/">
-          <span className="navbar-brand mb-0 h1">Star Wars</span>
-        </Link>
-        <div className="ml-auto d-flex gap-2 align-items-center">
-          {categories?.map((cat) => (
-            <Link
-              key={cat}
-              to={`/${cat}`}
-              className="btn btn-outline-secondary btn-sm"
-            >
-              {cat.charAt(0).toUpperCase().concat(cat.slice(1))}
-            </Link>
-          ))}
+        <Link to="/" className="navbar-brand">Star Wars</Link>
+
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span className="navbar-toggler-icon" />
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <div className="navbar-nav me-auto">
+            <Link to="/films" className="nav-link" onClick={closeNavbar}>Films</Link>
+            <Link to="/people" className="nav-link" onClick={closeNavbar}>People</Link>
+            <Link to="/planets" className="nav-link" onClick={closeNavbar}>Planets</Link>
+          </div>
+          <FavoritesDropdown />
         </div>
       </div>
     </nav>
